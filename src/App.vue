@@ -1,21 +1,28 @@
 <template>
-  <div id="app">
-    <h1 class="font-sans font-bold text-3xl text-red-500 text-center">
-      {{msg}}
-    </h1>
+  <div id="app"
+  class="">
+    <Header/>
+    <Navigation/>
+    
   </div>
 </template>
 
 <script>
+import Header from './assets/components/Header';
+import Navigation from './assets/components/Navigation';
+
 
 export default {
   name: 'App',
   components: {
-
+    Header,
+    Navigation
   },
   data() {
     return {
-      msg: 'Tailwind Test!'
+      headerProps: {
+        username: "Log In"
+      }
     }
   }
 }
@@ -26,10 +33,15 @@ export default {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  
 }
 
 body {
   font-family: Arial, Helvetica, sans-serif;
   line-height: 1.4;
+  background-color: #23395B;
 }
+
+
+
 </style>
