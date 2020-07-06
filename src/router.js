@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import Home from './assets/views/Home'
 import CreateUser from './assets/views/CreateAccount'
 import Login from './assets/views/Login'
+import DashboardView from './assets/views/DashboardView'
 
 Vue.use(Router)
 
@@ -22,6 +23,11 @@ export default new Router({
             path: '/login',
             name: 'login',
             component: Login
+        },
+        {
+            path: '/dashboard/:dashboardId',
+            name: 'dashboard',
+            component: DashboardView
         }
     ]
 })
