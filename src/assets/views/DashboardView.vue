@@ -4,15 +4,20 @@
         class="p-5 text-2xl text-center text-white">
             {{dashboard.title}}
         </h1>
+        <NoteComponent v-if="dashboard" :notesProp="dashboard.notes"></NoteComponent>
     </div>
 </template>
 
 <script>
 import Axios from 'axios';
+import NoteComponent from '../components/NoteComponent'
 
 
 export default {
     name: 'DashboardView',
+    components: {
+        NoteComponent
+    },
     data() {
         return {
             dashboardId: this.$route.params.dashboardId,
