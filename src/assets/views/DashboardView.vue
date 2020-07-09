@@ -4,7 +4,7 @@
         class="p-5 text-2xl text-center text-white">
             {{dashboard.title}}
         </h1>
-        <NoteComponent v-if="dashboard" :notesProp="dashboard.notes"></NoteComponent>
+        <NoteComponent v-if="dashboard" :dashboard_id="dashboardId" :notesProp="dashboard.notes"></NoteComponent>
     </div>
 </template>
 

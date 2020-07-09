@@ -20,7 +20,7 @@
                     {{dashboard.title}}
                 </router-link>
                 <button @click="deleteDash(dashboard.id)">
-                    <i class="fa fa-trash fa-2x bg-red-500 py-4 px-4 rounded" aria-hidden="true"/>
+                    <i class="fa fa-trash fa-2x bg-red-500 hover:bg-red-700 py-4 px-4 rounded" aria-hidden="true"/>
                 </button>
             </li>
         </ul>

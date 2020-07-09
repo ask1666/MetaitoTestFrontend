@@ -1,52 +1,56 @@
 <template>
 
-    <div class="p-5">
-        <form>
-            <div class="flex w-1/2 rounded-t border-b-2 border-opacity-25 border-gray-800" style="background-color: #FDF288;">
-                <div class=" w-1/3 p-1">
-                    <span class="text-sm block text-center">Select Note:</span>
-                    <select class=" text-xs h-6 w-full self-center block" id="noteSelect" style="background-color: #FCE93B;">
-                        <option class="text-xs" v-for="note in notes" v-bind:key="note.id">{{note.title}}</option>
+    <div class="p-5 ">
+        <form class="" @submit="save()">
+            <div class="flex md:w-1/2 w-auto rounded-t border-b-2 border-opacity-25 border-gray-800" style="background-color: #FDF288;">
+                <div id="noteSelectDiv" class=" w-1/3 p-1 self-center">
+                    <span class="text-sm block">Select Note:</span>
+                    <select @change="fillNote()" v-model="currentNote" class=" w-3/4 text-xs h-6 " id="noteSelect" style="background-color: #FCE93B;">
+                        <option class="text-xs" v-for="note in notes" :value="note" v-bind:key="note.id">{{note.title}}</option>
+                        <option class="text-xs" :value="null" >New</option>
                     </select>
                 </div>
-                <div class=" w-1/3 p-1">
-                    <span class="text-sm block text-center">Markdown:</span>
-                    <select class="text-xs h-6 w-full self-center block" id="markdown" style="background-color: #FCE93B;">
-                        <option class="text-xs" value="Markdown">Markdown</option>
-                        <option class="text-xs" value="Text">Text</option>
+                <div id="markdownSelectDiv" class=" w-1/3 p-1 self-center">
+                    <span class="text-sm block pl-1">Markdown:</span>
+                    <select v-model="markdown" class="w-3/4 text-xs h-6" id="markdown" style="background-color: #FCE93B;">
+                        <option class="text-xs" :value="false">Text</option>
+                        <option class="text-xs" :value="true">Markdown</option>
                     </select>
                 </div>
-                <button @click="toggleEdit()" type="button" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-2 rounded focus:outline-none focus:shadow-outline">
-                    <p v-if="!edit">Edit</p>
-                    <p v-else>Done</p>
-                </button>
+                <div class=" w-1/3 p-1 flex justify-end">
+                    <div>
+                        <button @click="toggleEdit()" type="button" class="bg-green-500 hover:bg-green-700 text-white font-bold px-1 py-2 overflow-auto rounded focus:outline-none focus:shadow-outline">
+                            <p v-if="!edit">Edit</p>
+                            <p v-else>Done</p>
+                        </button>
+                    </div>
+                    <div class="px-1">
+                        <button type="button" @click="deleteNote()" class="self-align">
+                            <i class="fa fa-trash fa-2x bg-red-500 overflow-auto hover:bg-red-700 px-2 py-1 rounded" aria-hidden="true"/>
+                        </button>
+                    </div>
+                </div>
             </div>
-            <div v-if="edit" class=" w-1/2" style="background-color: #FDF288; background-size: cover;">
+            <div v-if="edit" class=" md:w-1/2 w-auto" style="background-color: #FDF288; background-size: cover;">
                 <input @change="getText()" :value="inputTitle" type="text" id="inputTitle" placeholder="Enter Title"
                 class="bg-transparent text-xl border-b-2 border-opacity-25 border-gray-800 focus:outline-none font-bold text-center placeholder-gray-700 p-3 w-full">
                 <textarea @change="getText()" id="inputText" data-preview="#noteText" cols="50" rows="10" placeholder="Enter text for your note..."
                 class="bg-transparent h-64 text-lg focus:outline-none leading-8 text-black placeholder-gray-700 pt-2 px-10 w-full"
                 style="line-height: 1.5rem;" :value="inputText"></textarea>
             </div>
-            <div v-else class=" w-1/2" style="background-color: #FDF288; background-size: cover;">
+            <div v-else class=" md:w-1/2 w-auto" style="background-color: #FDF288; background-size: cover;">
                 <h1 type="text" id="noteTitle"
                 class="bg-transparent text-xl border-b-2 border-opacity-25 border-gray-800 focus:outline-none font-bold text-center placeholder-gray-700 p-3 w-full">
-                    <p v-if="inputTitle">{{inputTitle}}</p>
+                    <p v-if="inputTitle || inputTitle === undefined">{{inputTitle}}</p>
                     <p v-else>Nothing</p>
                 </h1>
                 <div id="noteText" class=" markdown h-64 placeholder-gray-700 pt-2 px-10">
-                    {{result}}
+                    
                 </div>
             </div>
-            <div class="flex justify-end border-t-2 p-2 border-opacity-25 border-gray-800 w-1/2 rounded-b" style="background-color: #FDF288; background-size: cover;">
-                <div class=" px-10">
-                    <span class="text-sm block text-center">Store As:</span>
-                    <select class="text-xs h-6 w-full self-center block" id="saveAs" style="background-color: #FCE93B;">
-                        <option class="text-xs" value="Markdown">Markdown</option>
-                        <option class="text-xs" value="HTML">HTML</option>
-                    </select>
-                </div>
-                <button class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-2 rounded focus:outline-none focus:shadow-outline">
+            <div class="flex justify-end border-t-2 p-2 border-opacity-25 border-gray-800 md:w-1/2 w-auto rounded-b" style="background-color: #FDF288; background-size: cover;">
+                
+                <button type="submit"  class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-2 rounded focus:outline-none focus:shadow-outline">
                     Save
                 </button>
             </div>
@@ -55,6 +59,7 @@
 </template>
 
 <script>
+import Axios from 'axios';
 let md = require('markdown-it')( {
     html: true,
     linkify: true,
@@ -71,18 +76,42 @@ export default {
         return {
             notes: Array.isArray(this.$attrs.notesProp) && this.$attrs.notesProp.length 
             ? this.$attrs.notesProp : null,
+            dashboardId: this.$attrs.dashboard_id,
             edit: false,
             inputText: "",
             inputTitle: "",
+            markdown: false,
+            storeHTML: false,
+            currentNote: null,
             result: "",
         }
     },
     updated() {
-        if (document.getElementById("noteText"))
-                document.getElementById("noteText").innerHTML = this.result;
+        
+
+        if (document.getElementById("noteText") && this.markdown)
+            document.getElementById("noteText").innerHTML = this.result;
+        else if (document.getElementById("noteText") && !this.markdown)
+            document.getElementById("noteText").innerHTML = this.inputText;
     },
     methods: {
         toggleEdit() {
+            let noteSelect = document.getElementById("noteSelectDiv");
+            let markdown = document.getElementById("markdownSelectDiv");
+
+            if (!this.edit) {
+                noteSelect.style.visibility = "hidden";
+                markdown.style.visibility = "hidden";
+            } else {
+                noteSelect.style.visibility = "visible";
+                markdown.style.visibility = "visible";
+            }
+
+            if (!this.currentNote && !this.edit) {
+                this.inputText = "";
+                this.inputTitle = "";
+                
+            } 
             
             this.edit = !this.edit;
             
@@ -92,6 +121,118 @@ export default {
             this.inputTitle = document.getElementById("inputTitle").value;
             this.result = md.render(this.inputText);
             
+        },
+        getNotes() {
+            Axios.get('http://localhost:4000/api/getDashboard', {
+                params: {
+                    id: this.dashboardId
+                }
+            })
+            .then (res => {
+                this.notes = res.data.data.notes;
+                
+                if (this.notes.length) {
+                    this.currentNote = this.notes[0];
+                } else {
+                    this.currentNote = null;
+                }
+                this.fillNote();
+            })
+            .catch(err => {
+                console.log(err);
+            })
+        },
+        save() {
+            if (!this.currentNote) {
+                this.createNote();
+            } else {
+                this.updateNote(this.currentNote.id)
+            }
+        },
+        createNote() {
+            if (this.storeHTML) {
+                Axios.post('http://localhost:4000/api/notes', {
+                    dashboard_id: this.dashboardId,
+                    note: {
+                        html_saved: this.storeHTML,
+                        markdown: this.markdown,
+                        text: this.result,
+                        title: this.inputTitle
+                    }
+                })
+                .then ( () => {
+                    this.getNotes();
+                })
+                .catch (err => {
+                    console.log(err);
+                })
+            } else {
+                Axios.post('http://localhost:4000/api/notes', {
+                    dashboard_id: this.dashboardId,
+                    note: {
+                        html_saved: this.storeHTML,
+                        markdown: this.markdown,
+                        text: this.inputText,
+                        title: this.inputTitle
+                    }
+                })
+                .then ( () => {
+                    this.getNotes();
+                })
+                .catch (err => {
+                    console.log(err);
+                })
+            }
+        },
+        updateNote(id) {
+            Axios.put('http://localhost:4000/api/notes', {
+                    id: id,
+                    note: {
+                        html_saved: this.storeHTML,
+                        markdown: this.markdown,
+                        text: this.inputText,
+                        title: this.inputTitle
+                    }
+                })
+                .then ( () => {
+                    this.getNotes();
+                })
+                .catch (err => {
+                    console.log(err);
+                })
+        },
+        deleteNote() {
+            Axios.delete('http://localhost:4000/api/notes', {
+                    params: {
+                        id: this.currentNote.id
+                    }
+                })
+                .then ( () => {
+                    this.getNotes();
+                })
+                .catch (err => {
+                    console.log(err, this.currentNote.id);
+                })
+        },
+        fillNote() {
+            
+            if (this.currentNote) {
+                this.inputText = this.currentNote.text;
+                this.inputTitle = this.currentNote.title;
+                document.getElementById("noteText").innerText = this.inputText;
+                document.getElementById("noteTitle").innerText = this.inputTitle;
+                if (this.currentNote.markdown) {
+                    this.markdown = this.currentNote.markdown;
+                    this.result = md.render(this.inputText);
+                }
+            } else {
+                this.inputText = "";
+                this.inputTitle = "Nothing";
+                this.result = "";
+                document.getElementById("noteText").innerHTML = this.inputText;
+                document.getElementById("noteTitle").innerText = this.inputTitle;
+                
+            }
         }
     }
 }
