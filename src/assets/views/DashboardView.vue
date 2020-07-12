@@ -4,19 +4,23 @@
         class="p-5 text-2xl text-center text-white">
             {{dashboard.title}}
         </h1>
-        <NoteComponent v-if="dashboard" :dashboard_id="dashboardId" :notesProp="dashboard.notes"></NoteComponent>
+        <div class=" w-full flex md:flex-row flex-col">
+            <NoteComponent v-if="dashboard" :dashboard_id="dashboardId" :notesProp="dashboard.notes"></NoteComponent>
+            <LinksView class="" v-if="dashboard" :dashboard_id="dashboardId" :linksProp="dashboard.links"></LinksView>
+        </div>
     </div>
 </template>
 
 <script>
 import Axios from 'axios';
-import NoteComponent from '../components/NoteComponent'
-
+import NoteComponent from '../components/NoteComponent';
+import LinksView from '../components/LinksView';
 
 export default {
     name: 'DashboardView',
     components: {
-        NoteComponent
+        NoteComponent,
+        LinksView
     },
     data() {
         return {

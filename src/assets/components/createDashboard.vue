@@ -1,7 +1,7 @@
 <template>
     <div class="p-5 text-center text-white">
         
-        <div v-if="!createBtn" class="pt-5 w-full w-full flex justify-center">
+        <div v-if="!createBtn" class="pt-5 w-full flex justify-center">
             <form @submit="createDashboard"
             class="bg-blue-500 shadow-md rounded px-8 pt-6 pb-6 mb-4">
                 <button @click="toggleCreateForm()" class="float-right" type="button">

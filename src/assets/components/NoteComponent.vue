@@ -1,8 +1,8 @@
 <template>
 
-    <div class="p-5 ">
+    <div class="p-5 md:w-1/2">
         <form class="" @submit="save()">
-            <div class="flex md:w-1/2 w-auto rounded-t border-b-2 border-opacity-25 border-gray-800" style="background-color: #FDF288;">
+            <div class="flex w-auto rounded-t border-b-2 border-opacity-25 border-gray-800" style="background-color: #FDF288;">
                 <div id="noteSelectDiv" class=" w-1/3 p-1 self-center">
                     <span class="text-sm block">Select Note:</span>
                     <select @change="fillNote()" v-model="currentNote" class=" w-3/4 text-xs h-6 " id="noteSelect" style="background-color: #FCE93B;">
@@ -31,14 +31,14 @@
                     </div>
                 </div>
             </div>
-            <div v-if="edit" class=" md:w-1/2 w-auto" style="background-color: #FDF288; background-size: cover;">
+            <div v-if="edit" class="  w-auto" style="background-color: #FDF288; background-size: cover;">
                 <input @change="getText()" :value="inputTitle" type="text" id="inputTitle" placeholder="Enter Title"
                 class="bg-transparent text-xl border-b-2 border-opacity-25 border-gray-800 focus:outline-none font-bold text-center placeholder-gray-700 p-3 w-full">
                 <textarea @change="getText()" id="inputText" data-preview="#noteText" cols="50" rows="10" placeholder="Enter text for your note..."
                 class="bg-transparent h-64 text-lg focus:outline-none leading-8 text-black placeholder-gray-700 pt-2 px-10 w-full"
                 style="line-height: 1.5rem;" :value="inputText"></textarea>
             </div>
-            <div v-else class=" md:w-1/2 w-auto" style="background-color: #FDF288; background-size: cover;">
+            <div v-else class="  w-auto" style="background-color: #FDF288; background-size: cover;">
                 <h1 type="text" id="noteTitle"
                 class="bg-transparent text-xl border-b-2 border-opacity-25 border-gray-800 focus:outline-none font-bold text-center placeholder-gray-700 p-3 w-full">
                     <p v-if="inputTitle || inputTitle === undefined">{{inputTitle}}</p>
@@ -48,7 +48,7 @@
                     
                 </div>
             </div>
-            <div class="flex justify-end border-t-2 p-2 border-opacity-25 border-gray-800 md:w-1/2 w-auto rounded-b" style="background-color: #FDF288; background-size: cover;">
+            <div class="flex justify-end border-t-2 p-2 border-opacity-25 border-gray-800  w-auto rounded-b" style="background-color: #FDF288; background-size: cover;">
                 
                 <button type="submit"  class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-2 rounded focus:outline-none focus:shadow-outline">
                     Save
