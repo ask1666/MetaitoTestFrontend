@@ -11,22 +11,22 @@ export default new Router({
     routes: [
         {
             path: '/',
-            name: 'home',
+            name: 'Home',
             component: Home
         },
         {
             path: '/createUser',
-            name: 'createUser',
+            name: 'Create User',
             component: CreateUser
         }, 
         {
             path: '/login',
-            name: 'login',
+            name: 'Login',
             component: Login
         },
         {
             path: '/dashboard/:dashboardId',
-            name: 'dashboard',
+            name: 'Dashboard',
             component: DashboardView
         }
     ]

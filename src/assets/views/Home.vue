@@ -1,11 +1,11 @@
 <template>
   <div class="md:w-1/2 w-full md:container md:mx-auto">
     <div class>
-      <h1 v-if="!errorMessage" class="p-5 text-2xl text-center text-white">Dashboards</h1>
+      <div class="pb-10"></div>
       <div class="pt-10 flex flex-col items-center" v-if="errorMessage">
         <h1 class="text-2xl text-center text-red-600 font-mono font-bold pb-3">{{errorMessage}}</h1>
         <router-link
-          class="font-bold text-white bg-green-500 hover:bg-green-700 py-3 px-4 rounded"
+          class="font-bold text-white bg-blue-800 hover:bg-green-600 shadow-xl py-3 px-4"
           to="/login"
         >Login</router-link>
       </div>
@@ -14,13 +14,14 @@
       </div>
       <ul v-else-if="!(this.dashboards === undefined || this.dashboards.length === 0)">
         <li class="flex p-3" v-for="dashboard in dashboards" v-bind:key="dashboard.id">
+          <div class="w-1/12"></div>
           <router-link
-            :to="{name: 'dashboard', params: {dashboardId: dashboard.id}}"
-            class="p-2 text-xl text-center py-4 self-center text-black bg-blue-500 w-11/12 rounded"
+            :to="{name: 'Dashboard', params: {dashboardId: dashboard.id}}"
+            class="p-2 text-xl text-center py-4 self-center text-black bg-blue-800 hover:bg-blue-600 shadow-xl font-bold w-11/12"
           >{{dashboard.title}}</router-link>
-          <button @click="deleteDash(dashboard.id)">
+          <button @click="deleteDash(dashboard.id)" class="object-fill">
             <i
-              class="fa fa-trash fa-2x bg-red-500 hover:bg-red-700 py-4 px-4 rounded"
+              class="fa fa-trash fa-2x shaodw-xl bg-red-500 hover:bg-red-700 p-3"
               aria-hidden="true"
             />
           </button>

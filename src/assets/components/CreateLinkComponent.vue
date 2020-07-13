@@ -1,30 +1,32 @@
 <template>
   <div class="flex justify-center">
     <div v-if="!createBtn" class="pt-5 w-full flex justify-center">
-      <form @submit="createLink()" class="bg-blue-500 shadow-md rounded px-8 pt-6 pb-6 mb-4">
+      <form @submit="createLink()" class="bg-blue-800 shadow-xl px-8 pt-6 pb-6 mb-4">
         <button @click="toggleCreateForm()" class="float-right" type="button">
           <i class="fa fa-times" aria-hidden="true" />
         </button>
-        <label for class="block text-black text-sm font-bold mb-2">Enter a title for your link</label>
+        <label for class="block text-gray-200 text-md font-bold font-sans mb-2">Enter a title for your link</label>
         <input
           v-model="newLinkTitle"
           class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           type="text"
           placeholder="Title"
+          required
         />
         <div class="pt-5">
-          <label for class="block text-black text-sm font-bold mb-2">Enter url</label>
+          <label for class="block text-gray-200 text-md font-bold font-sans mb-2">Enter url</label>
           <input
             v-model="newUrl"
             class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             type="text"
             placeholder="http://www.example.com"
+            required
           />
         </div>
         <div class="pt-5">
           <p v-if="errorMessage" class="text-red-800 font-bold">{{errorMessage}}</p>
           <button
-            class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            class="bg-blue-600 hover:bg-blue-700 shadow-lg text-white font-bold py-2 px-4"
             type="submit"
           >Submit
           </button>
@@ -35,7 +37,7 @@
     <button
       v-else
       @click="toggleCreateForm()"
-      class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-2 rounded focus:outline-none focus:shadow-outline"
+      class="bg-blue-600 hover:bg-blue-500 text-black shadow-lg font-bold py-2 px-2 "
     >Create new link</button>
   </div>
 </template>
@@ -88,12 +90,11 @@ export default {
             '(\\?[;&a-z\\d%_.~+=-]*)?'+ // query string
             '(\\#[-a-z\\d_]*)?$','i'); // fragment locator
 
-            if (!pattern.test(str) || !str.startsWith("http://" || "https://"))
+            if (!pattern.test(str) || !str.startsWith("http://") || !str.startsWith("https://"))
                 this.errorMessage = 'Not valid url';
             else
                 this.errorMessage = null;
-            console.log(str.startsWith("http://" || "https://"));
-        return (!!pattern.test(str) && str.startsWith("http://" || "https://"));
+        return (!!pattern.test(str) && (str.startsWith("http://") || str.startsWith("https://")));
     },
     getLinks() {
         this.$parent.getLinks();

@@ -2,21 +2,22 @@
   <div id="app"
   class="">
     <Header/>
-    <Navigation/>
+    <!-- <Navigation/> -->
+    <router-view/>
     
   </div>
 </template>
 
 <script>
 import Header from './assets/components/Header';
-import Navigation from './assets/components/Navigation';
+/* import Navigation from './assets/components/Navigation'; */
 
 
 export default {
   name: 'App',
   components: {
     Header,
-    Navigation
+    /* Navigation */
   },
   data() {
     return {

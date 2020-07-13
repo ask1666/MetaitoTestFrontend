@@ -3,12 +3,12 @@
         
         <div v-if="!createBtn" class="pt-5 w-full flex justify-center">
             <form @submit="createDashboard"
-            class="bg-blue-500 shadow-md rounded px-8 pt-6 pb-6 mb-4">
+            class="bg-blue-800 shadow-lg px-8 pt-6 pb-6 mb-4">
                 <button @click="toggleCreateForm()" class="float-right" type="button">
                     <i class="fa fa-times" aria-hidden="true"/>
                 </button>
                 <label for=""
-                class="block text-black text-sm font-bold mb-2">
+                class="block text-gray-200 text-md font-bold mb-2">
                     Enter a title
                 </label>
                 <input v-model="title" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" placeholder="Title">
@@ -16,14 +16,14 @@
                     <p v-if="errorMessage" class="text-red-800 font-bold">
                         {{errorMessage}}
                     </p>
-                    <button class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
+                    <button class="bg-blue-700 hover:bg-blue-600 shadow-xl text-white font-bold py-2 px-4 " type="submit">
                         Submit
                     </button>
                 </div>
             </form>
         </div>
 
-        <button v-else @click="toggleCreateForm()" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-2 rounded focus:outline-none focus:shadow-outline">
+        <button v-else @click="toggleCreateForm()" class="bg-blue-700 shadow-xl hover:bg-blue-600 text-white font-bold py-2 px-2 focus:outline-none focus:shadow-outline">
             Create new
         </button>
     </div>

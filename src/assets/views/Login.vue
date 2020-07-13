@@ -1,10 +1,10 @@
 <template>
   <div>
-    <h1 class="p-5 text-2xl text-center text-white">Login</h1>
-    <div class="pt-5 w-full w-full flex justify-center">
-      <form class="bg-blue-500 shadow-md rounded px-8 pt-6 pb-8 mb-4" @submit="login">
+    <div class="pb-10"/>
+    <div class="pt-5 w-full flex justify-center">
+      <form class="bg-blue-800 shadow-xl px-8 pt-6 pb-8 mb-4" @submit="login">
         <div class="mb-4">
-          <label class="block text-black text-sm font-bold mb-2" for="email">Email</label>
+          <label class="block text-gray-200 text-md font-bold font-sans mb-2" for="email">Email</label>
           <input
             v-model="email"
             class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
@@ -13,7 +13,7 @@
           />
         </div>
         <div class="mb-6">
-          <label class="block text-black text-sm font-bold mb-2" for="password">Password</label>
+          <label class="block text-gray-200 text-md font-bold font-sans mb-2" for="password">Password</label>
           <input
             v-model="password"
             class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
@@ -25,13 +25,14 @@
         <h1 v-if="errorMessage" class="text-red-700 pb-2 font-bold">{{errorMessage}}</h1>
         <div class="flex items-center justify-between">
           <button
-            class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            class="bg-blue-500 hover:bg-blue-700 shadow-lg text-white font-bold py-2 px-4 "
             type="submit"
           >Sign In</button>
           <a
-            class="inline-block align-baseline font-bold text-sm text-gray-700 hover:text-blue-900"
+            @click="$router.push('createUser')"
+            class="inline-block align-baseline font-bold text-sm text-white hover:text-gray-400"
             href="#"
-          >Forgot Password?</a>
+          >Create account</a>
         </div>
       </form>
     </div>
@@ -62,6 +63,7 @@ export default {
         .then(res => {
           console.log(res);
           this.errorMessage = null;
+          sessionStorage.setItem('user', this.email);
           this.$router.push("/");
         })
         .catch(err => {

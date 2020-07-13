@@ -1,16 +1,16 @@
 <template>
-  <div class="md:w-1/2 w-full p-5">
-    <div class="bg-blue-700 flex rounded-t">
+  <div class="md:w-1/2 w-full p-5" style="background-color: #23395B;">
+    <div class="bg-blue-800 flex rounded-t ">
       <h1 class="w-full font-sans text-2xl py-1 self-center text-center underline">Links</h1>
-      <div class="pt-1">
+      <div class="pt-1 pb-2">
         <button
           @click="toggleEdit()"
-          class="bg-green-500 hover:bg-green-700 text-white font-bold px-4 py-2 overflow-auto rounded focus:outline-none focus:shadow-outline"
+          class="bg-blue-600 hover:bg-blue-500 shadow-xl text-black font-bold px-4 py-2 overflow-auto"
         >Edit</button>
       </div>
     </div>
     <ul
-      class="flex content-start flex-wrap items-center border-2 rounded-b border-blue-700"
+      class="flex content-start flex-wrap items-center shadow-2xl rounded-b border-blue-700"
       v-if="links"
     >
       <li class="flex p-3" v-for="link in links" v-bind:key="link.id">
