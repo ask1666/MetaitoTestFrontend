@@ -9,6 +9,7 @@
             v-model="email"
             class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             placeholder="Email"
+            maxlength="50"
             required
           />
         </div>
@@ -58,8 +59,8 @@ export default {
             this.errorMessage = null;
             this.$router.push("login");
           })
-          .catch(err => {
-            console.log(err);
+          .catch(() => {
+            this.errorMessage = "Invalid Email!";
           });
       } else {
         this.errorMessage = "Invalid Email!";

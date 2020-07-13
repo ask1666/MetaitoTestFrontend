@@ -63,13 +63,19 @@ export default {
         .then(res => {
           console.log(res);
           this.errorMessage = null;
-          sessionStorage.setItem('user', this.email);
+          this.setCookie('user',this.email,1);
           this.$router.push("/");
         })
         .catch(err => {
           console.log(err);
           this.errorMessage = "Invalid username or password!";
         });
+    },
+    setCookie(cname,cvalue,exdays) {
+      var d = new Date();
+      d.setTime(d.getTime() + (exdays*24*60*60*1000));
+      var expires = "expires="+ d.toUTCString();
+      document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
     }
   }
 };

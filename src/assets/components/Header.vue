@@ -1,18 +1,19 @@
 <template>
     <div id="header" class="flex p-5 items-center bg-blue-800 shadow-lg">
-      <div class="w-1/12"></div>
+      <div class="w-5/12"></div>
         <h1
-        class="text-center w-10/12 text-3xl font-bold text-red-500">
+        class="text-center w-2/12 text-3xl font-bold text-red-500">
             {{viewTitle}}
         </h1>
-        <div class="text-lg text-right w-1/12 text-white flex  " v-if="user">
-            <Navigation class="pr-3"/>
+        <div class="text-lg text-right w-5/12 text-white flex flex-row-reverse " v-if="user">
             <button @click=" () => {
               if($route.name !== 'Login')
                 $router.push('/login')}" 
                 class="  bg-blue-800 hover:bg-blue-900 shadow-xl px-2 py-1">
-                {{user}}
+                <p v-if="user">{{user}}</p>
+                <p v-else>Login</p>
             </button>
+            <Navigation class="pr-3"/>
         </div>
         
     </div>
@@ -28,14 +29,31 @@ export default {
     },
     data() {
         return {
-            user: sessionStorage.getItem('user'),
+            user: this.getCookie('user'),
             viewTitle: this.$route.name
         }
     },
     watch: {
     '$route' () {
-      this.user = sessionStorage.getItem('user');
+      this.user = this.getCookie('user'),
       this.viewTitle = this.$route.name;
+    }
+  },
+  methods: {
+    getCookie(cname) {
+      var name = cname + "=";
+      var decodedCookie = decodeURIComponent(document.cookie);
+      var ca = decodedCookie.split(';');
+      for(var i = 0; i <ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') {
+          c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+          return c.substring(name.length, c.length);
+        }
+      }
+      return "";
     }
   }
     
