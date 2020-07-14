@@ -25,7 +25,7 @@
         <button
           @click="deleteLink(link.id)"
           v-if="edit"
-          class="bg-red-700 hover:bg-red-500 self-center"
+          class="bg-red-500 hover:bg-red-400 items-center pt-2 px-1"
         >
           <i class="fa fa-trash fa-2x h-10 rounded-r" aria-hidden="true" />
         </button>

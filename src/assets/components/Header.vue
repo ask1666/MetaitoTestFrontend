@@ -1,11 +1,11 @@
 <template>
     <div id="header" class="flex p-5 items-center bg-blue-800 shadow-lg">
-      <div class="w-5/12"></div>
+      <div class="w-4/12"></div>
         <h1
-        class="text-center w-2/12 text-3xl font-bold text-red-500">
+        class="text-center w-4/12 text-3xl font-bold text-red-500">
             {{viewTitle}}
         </h1>
-        <div class="text-lg text-right w-5/12 text-white flex flex-row-reverse " v-if="user">
+        <div class="text-lg text-right w-4/12 text-white flex flex-row-reverse " v-if="user">
             <button @click=" () => {
               if($route.name !== 'Login')
                 $router.push('/login')}" 
