@@ -13,7 +13,6 @@
     "font-awesome": "^4.7.0",
     "github-markdown-css": "^4.0.0",
     "markdown-it": "^11.0.0",
-    "simplemde": "^1.11.2",
     "tailwindcss": "^1.4.6",
     "validator": "^13.1.1",
     "vue": "^2.6.11",
